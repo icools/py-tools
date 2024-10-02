@@ -1,0 +1,23 @@
+# 使用 Python 的官方輕量映像作為基礎
+FROM python:3.10-slim
+
+# 安裝 ffmpeg 和 yt-dlp
+RUN apt-get update && apt-get install -y ffmpeg \
+    && pip install --no-cache-dir yt-dlp \
+    && apt-get clean \
+    && rm -rf /var/lib/apt/lists/*
+
+# 創建一個下載目錄
+RUN mkdir -p /downloads
+
+# 將本地的 download_audio.py 複製到容器中
+COPY download_audio.py /download_audio.py
+
+# 設置工作目錄
+WORKDIR /downloads
+
+# 設置默認入口點為 Python 腳本
+ENTRYPOINT ["python", "/download_audio.py"]
+
+# 默認命令為一個佔位符，實際執行時會被覆蓋
+CMD ["https://www.youtube.com/watch?v=c0p8Srdau5s&ab_channel=Huan"]
