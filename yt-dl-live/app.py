@@ -2,6 +2,7 @@ import subprocess
 import sys
 import os
 import re
+import unicodedata
 
 def download_stream_clip(url, duration, format_type):
     """
@@ -24,8 +25,9 @@ def download_stream_clip(url, duration, format_type):
         ]
         title = subprocess.check_output(title_command).decode().strip()
 
-        # 移除特殊字元，避免檔案系統問題
-        safe_title = re.sub(r'[\\/*?:"<>|]', "", title).replace(" ", "_")
+        # 標準化檔名，移除特殊字元，避免檔案系統問題
+        safe_title = unicodedata.normalize('NFKD', title)
+        safe_title = re.sub(r'[\\/*?:"<>|]', "", safe_title).replace(" ", "_")
 
         # 根據 format_type 決定輸出文件格式
         if format_type == 'mp3':
