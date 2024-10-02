@@ -1,0 +1,14 @@
+# 使用 Python 和 yt-dlp 及 ffmpeg 基底映像
+FROM python:3.9-slim
+
+# 安裝 yt-dlp 和 ffmpeg
+RUN apt-get update && \
+    apt-get install -y ffmpeg && \
+    pip install yt-dlp
+
+# 將當前目錄的內容複製到容器中
+WORKDIR /app
+COPY . /app
+
+# 設置執行腳本的入口點
+ENTRYPOINT ["python", "app.py"]
