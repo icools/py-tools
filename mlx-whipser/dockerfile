@@ -1,0 +1,25 @@
+# not work , dont use .
+
+# Step 1: Use an official Python image as the base
+FROM python:3.10-slim
+
+# Step 2: Set the working directory
+WORKDIR /app
+
+# Step 3: Install required packages
+RUN apt-get update && apt-get install -y \
+    ffmpeg \
+    && rm -rf /var/lib/apt/lists/*
+
+# Step 4: Install Python dependencies
+COPY requirements.txt .
+RUN pip install --no-cache-dir -r requirements.txt
+
+# Step 5: Copy the rest of the application
+COPY . .
+
+# Step 6: Expose any required ports (optional, if you're running a web service)
+EXPOSE 8080
+
+# Step 7: Run the main command
+CMD ["python", "transcribe.py"]
