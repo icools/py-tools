@@ -11,3 +11,7 @@ can download YT live, and set time and file type (mp3 | mp4), sure u can use doc
 ## ai-tools
 
 gemini / SambaNova / Groq  - mixed ai
+
+## mlx-whipser
+
+use apple mlx + openai-whipser to make srt file
